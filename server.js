@@ -294,6 +294,8 @@ app.get('/api/tasks', async (req, res) => {
     try {
         const { userId } = req.query
 
+        console.log('got userId: ', userId)
+
         const database = client.db('todos-database')
         const collection = database.collection('tasks')
 
@@ -301,10 +303,12 @@ app.get('/api/tasks', async (req, res) => {
 
 
         if (tasks.length === 0) {
+            console.log('tasks are empty!')
             return res.status(404).json({ message: 'No tasks found' })
         }
         
         res.json(tasks)
+        console.log('this was a success!')
     }
     catch (error) {
         console.error('Error getting user tasks:', error)
