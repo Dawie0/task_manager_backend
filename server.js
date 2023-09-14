@@ -56,7 +56,7 @@ app.post('/api/users/register', async (req, res) => {
     try {
         const {username, email, password} = req.body.user
 
-        const database = client.db('backend_db')
+        const database = client.db('todos-database')
         const collection = database.collection('users')
 
         const userExist = await collection.findOne({ 'user.email': email })
@@ -90,7 +90,7 @@ app.post('/api/users/login', async (req, res) => {
     try {
         const { email, password } = req.body.user
 
-        const database = client.db('backend_db')
+        const database = client.db('todos-database')
         const collection = database.collection('users')
 
         const user = await collection.findOne({ 'user.email': email })
@@ -116,7 +116,7 @@ app.post('/api/users/login', async (req, res) => {
 app.get('/api/users', async (req, res) => {
     try {
         const { email } = req.query
-        const database = client.db('backend_db')
+        const database = client.db('todos-database')
         const collection = database.collection('users')
 
         const user = await collection.findOne({ 'user.email': email })
@@ -141,7 +141,7 @@ app.put('/api/users-update/:id', verifyToken, async (req, res) => {
         const userDetails = req.body.userDetails
         console.log(userDetails)
         
-        const database = client.db('backend_db')
+        const database = client.db('todos-database')
         const collection = database.collection('users')
 
         const user = await collection.findOne({ '_id': id })
@@ -172,7 +172,7 @@ app.post('/api/create-tasks/', verifyToken, async (req, res) => {
             return res.status(500).json({ message: 'Invalid data provided' })
         }
 
-        const database = client.db('backend_db')
+        const database = client.db('todos-database')
         const collection = database.collection('tasks')
         
         const result = await collection.insertOne({ userId, task })
@@ -196,7 +196,7 @@ app.put('/api/update-task/', verifyToken, async (req, res) => {
         const taskId = req.body.taskId
         const updatedTask = req.body.task
 
-        const database = client.db('backend_db')
+        const database = client.db('todos-database')
         const collection = database.collection('tasks')
 
         const filter = {
@@ -228,7 +228,7 @@ app.put(`/api/delete/`, verifyToken, async (req, res) => {
     try {
         const taskId = req.body.taskId
 
-        const database = client.db('backend_db')
+        const database = client.db('todos-database')
         const collection = database.collection('tasks')
 
         const filter = {
@@ -260,7 +260,7 @@ app.put(`/api/finish/`, verifyToken, async (req, res) => {
     try {
         const taskId = req.body.taskId
 
-        const database = client.db('backend_db')
+        const database = client.db('todos-database')
         const collection = database.collection('tasks')
 
         const filter = {
@@ -294,7 +294,7 @@ app.get('/api/tasks', async (req, res) => {
     try {
         const { userId } = req.query
 
-        const database = client.db('backend_db')
+        const database = client.db('todos-database')
         const collection = database.collection('tasks')
 
         const tasks = await collection.find({ 'userId': userId }).toArray()
