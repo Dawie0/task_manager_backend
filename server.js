@@ -116,6 +116,7 @@ app.post('/api/users/login', async (req, res) => {
 app.get('/api/users', async (req, res) => {
     try {
         const { email } = req.query
+        console.log('email: ', email)
         const database = client.db('todos-database')
         const collection = database.collection('users')
 
@@ -127,6 +128,7 @@ app.get('/api/users', async (req, res) => {
         const userWithoutPassword = { ...user }
         delete userWithoutPassword.user.password
 
+        console.log('user: ', userWithoutPassword)
         res.json(userWithoutPassword)
     }
     catch (error) {
